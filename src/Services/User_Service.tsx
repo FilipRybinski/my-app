@@ -1,40 +1,37 @@
 import axios from "axios";
 import { State_Register } from "../Register_Component/Register_State";
 import { Orders_Model, registrationModelType } from "../Dashboard_Component/Orders_Display/Orders_State";
+import { Message } from "../Dashboard_Component/Contact_Display/Contact_State";
 const API = "http://localhost:3000/"
-class User_Service {
-    register(firstName: string, lastName: string, email: string, phone: string, password: string, type: string) {
-        return axios.post(API + "singup", {
-            firstName,
-            lastName,
-            email,
-            phone,
-            password,
-            type
-        });
-    }
-    login(email: string, password: string) {
-        let UserType: boolean = false;
-        let Name: string = '';
-        return axios.get(API + "singup").then(data => {
-            const user = data.data.find((a: State_Register) => {
-                a.type === 'client' ? UserType = false : UserType = true;
-                Name = a.fname;
-                return a.email === email && a.password === password
-            });
-            if (user) {
-                sessionStorage.setItem('token', '5QvJ6Taggymns8a2LPvn');
-                sessionStorage.setItem('name', Name);
-                sessionStorage.setItem('email', email);
-                UserType === true ? sessionStorage.setItem('userType', 'admin') : sessionStorage.setItem('userType', 'client');
-            } else {
-                return false;
-            }
-        })
-    }
+export const register = (firstName: string, lastName: string, email: string, phone: string, password: string, type: string) => {
+    return axios.post(API + "singup", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        type
+    });
 }
-export default new User_Service();
-
+export const login = (email: string, password: string) => {
+    let UserType: boolean = false;
+    let Name: string = '';
+    return axios.get(API + "singup").then(data => {
+        const user = data.data.find((a: State_Register) => {
+            a.type === 'client' ? UserType = false : UserType = true;
+            Name = a.fname;
+            return a.email === email && a.password === password
+        });
+        if (user) {
+            sessionStorage.setItem('token', '5QvJ6Taggymns8a2LPvn');
+            sessionStorage.setItem('name', Name);
+            sessionStorage.setItem('email', email);
+            UserType === true ? sessionStorage.setItem('userType', 'admin') : sessionStorage.setItem('userType', 'client');
+        } else {
+            return false;
+        }
+    })
+}
 export const get_orders = async (): Promise<Orders_Model[]> => {
     let orders: Orders_Model[];
     try {
@@ -94,4 +91,26 @@ export const add_registration = async (id: number, firstName: string, lastName: 
         console.log("error", error);
         return null;
     }
+}
+export const post_message = async (object: Message): Promise<number | null> => {
+    try {
+        const { data, status } = await axios.post(API + 'message', object)
+        return status;
+    } catch (error) {
+        console.log("error", error);
+        return null;
+    }
+}
+export const get_messages = async (): Promise<Message[]> => {
+    let message: Message[];
+    try {
+        const { data } = await axios.get(API + "message");
+        message = data;
+        return message;
+    } catch {
+        return [];
+    }
+}
+export const delete_message = async (id: number): Promise<void> => {
+    await axios.delete(API + "message/" + id);
 }

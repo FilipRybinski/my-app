@@ -1,9 +1,9 @@
 import React from 'react'
 import { Formik, Form } from "formik";
 import InputField from '../shared/InputField';
-import User_Service from '../Services/User_Service';
 import { validate } from '../shared/formvalid_register'
 import Buttons from '../shared/Buttons';
+import { register } from '../Services/User_Service';
 
 type Props = {
 
@@ -31,7 +31,7 @@ class Register extends React.Component<Props, State_Register> {
     }
     handleRegister(formValue: { fname: string, lname: string, email: string, phone: string, password: string, type: string }) {
         const { fname, lname, email, phone, password, type } = formValue;
-        User_Service.register(fname, lname, email, phone, password, type);
+        register(fname, lname, email, phone, password, type);
 
     }
 

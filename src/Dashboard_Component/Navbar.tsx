@@ -1,6 +1,9 @@
 import { Link, Outlet } from 'react-router-dom'
 import '../style/NavbarCSS.css'
 function Content() {
+    const type = sessionStorage.getItem('userType');
+    const link = 'client/' + type;
+    console.log(link);
     return (
         <div>
             <nav >
@@ -13,6 +16,9 @@ function Content() {
                     </li>
                     <li >
                         <Link to={'faq'}>FAQ</Link>
+                    </li>
+                    <li >
+                        <Link to={link}>Detail</Link>
                     </li>
                     <li >
                         <Link to={'/'} onClick={() => { sessionStorage.clear(); }}>Logout</Link>

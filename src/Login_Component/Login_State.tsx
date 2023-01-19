@@ -4,7 +4,7 @@ import { Formik, Form, } from "formik";
 import { validate } from '../shared/formvalid_login';
 import Buttons from '../shared/Buttons';
 import InputField from '../shared/InputField';
-import User_Service from '../Services/User_Service';
+import { login } from '../Services/User_Service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { delay } from '../shared/Buttons';
@@ -31,7 +31,7 @@ class Login extends React.Component<Props, State> {
     }
     async handleLogin(formValue: { email: string, password: string }, { resetForm }: any) {
         const { email, password } = formValue;
-        await User_Service.login(email, password);
+        await login(email, password);
         if (sessionStorage.getItem('token') !== null) {
             toast.success('Success!', {
                 position: "top-right",

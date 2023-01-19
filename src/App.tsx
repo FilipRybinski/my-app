@@ -8,6 +8,7 @@ import Dashboard from './Dashboard_Component/Dashboard';
 import FAQ from './Dashboard_Component/FAQ';
 import Orders from './Dashboard_Component/Orders_Display/Orders_State';
 import Contact from './Dashboard_Component/Contact_Display/Contact_State';
+import ClientDetail from './Dashboard_Component/Clinet_Detail/Client_Detail';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='faq' element={<FAQ />} />
           <Route path='orders' element={<Orders />} />
           <Route path='contact' element={<Contact />} />
+          <Route path='client/:type' element={<ClientDetail />} />
         </Route>
       </Routes>
     </div >
